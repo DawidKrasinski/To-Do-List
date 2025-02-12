@@ -4,20 +4,33 @@
 @tailwind utilities;
 
 :root {
+  --deleteButton: 0 0% 34%;
+  --unactive-icon: 300 30% 60%;
+}
+
+.light {
+  --background: 200 100% 95%;
+  --foreground: 220 15% 12%;
+  --muted: 0 0% 100%;
+  --muted-foreground: 240 50% 2%;
+  --navBar: 210 100% 85%;
+}
+
+.dark {
   --background: 220 15% 12%;
   --foreground: 0 0% 100%;
   --muted: 0 0% 20%;
   --muted-foreground: 0 0% 89%;
-  --deleteTaskButton: 0 0% 34%;
   --navBar: 220 15% 9%;
 }
 
-/* .light {
-  --background: 230 40% 38%;
-  --foreground: 240 50% 2%;
-  --muted: 180 50% 98%;
-  --muted-foreground: 240 50% 2%;
-} */
+.custom {
+  --background: 20 15% 12%;
+  --foreground: 0 0% 100%;
+  --muted: 0 0% 20%;
+  --muted-foreground: 0 0% 89%;
+  --navBar: 220 15% 9%;
+}
 
 body {
   font-family: Arial, Helvetica, sans-serif;

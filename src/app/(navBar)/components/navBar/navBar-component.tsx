@@ -1,32 +1,30 @@
+"use client";
+
 import Link from "next/link";
+import { useLocation } from "react-router-dom";
 
 interface NavBarProps {
   activeIcon: "Home" | "Calendar" | "Priorities" | "Groups";
+}
+
+function Icon({ href, icon }: { href: string; icon: string }) {
+  return (
+    <div className="flex-1 flex justify-center items-center">
+      <Link href={href}>
+        <i
+          className={`fa-solid ${icon} text-2xl text-purple-400 text-unactiveIcon`} //!!!!!!
+        ></i>
+      </Link>
+    </div>
+  );
 }
 
 export function NavBar({ activeIcon }: NavBarProps) {
   return (
     <nav className="fixed bottom-0 left-0 right-0 w-full bg-navBar rounded-t-2xl py-1 px-4">
       <div className="flex gap-8">
-        <div className="flex-1 flex justify-center items-center">
-          <Link href="#">
-            <i
-              className={`fa-solid fa-calendar-days text-2xl text-purple-400 ${
-                activeIcon === "Calendar" ? "" : "opacity-35"
-              }`}
-            ></i>
-          </Link>
-        </div>
-
-        <div className="flex-1 flex justify-center items-center">
-          <Link href="/">
-            <i
-              className={`fa-solid fa-house text-2xl text-purple-400 ${
-                activeIcon === "Home" ? "" : "opacity-35"
-              }`}
-            ></i>
-          </Link>
-        </div>
+        <Icon href="/calendar" icon="fa-calendar-days" />
+        <Icon href="/" icon="fa-house" />
 
         <div className="flex-1 flex justify-center items-center">
           <Link
@@ -37,25 +35,8 @@ export function NavBar({ activeIcon }: NavBarProps) {
           </Link>
         </div>
 
-        <div className="flex-1 flex justify-center items-center">
-          <Link href="/priorities">
-            <i
-              className={`fa-solid fa-clipboard-list text-2xl text-purple-400 ${
-                activeIcon === "Priorities" ? "" : "opacity-35"
-              }`}
-            ></i>
-          </Link>
-        </div>
-
-        <div className="flex-1 flex justify-center items-center">
-          <Link href="#">
-            <i
-              className={`fa-solid fa-user-group text-2xl text-purple-400 ${
-                activeIcon === "Groups" ? "" : "opacity-35"
-              }`}
-            ></i>
-          </Link>
-        </div>
+        <Icon href="/priorities" icon="fa-clipboard-list" />
+        <Icon href="/group" icon="fa-user-group" />
       </div>
     </nav>
   );

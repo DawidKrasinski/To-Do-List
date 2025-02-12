@@ -1,7 +1,7 @@
 import { Priority } from "./priorityType";
 
 export type Task = {
-  id?: string;
+  id?: number;
   name: string;
   description: string;
   done?: boolean;

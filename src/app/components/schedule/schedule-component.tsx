@@ -1,4 +1,4 @@
-import { Task } from "@/app/taskType";
+import { Task } from "@/app/types/taskType";
 import { useEffect, useRef } from "react";
 
 interface ScheduleProps {
@@ -31,16 +31,13 @@ function EditableArea({
 }
 
 export function Schedule({ setTask, task }: ScheduleProps) {
-  const handleInputChange = (
-    value: string,
-    field: keyof Task
-  ) => {
+  const handleInputChange = (value: string, field: keyof Task) => {
     setTask((prevTask) => ({ ...prevTask, [field]: value }));
   };
 
   const handleDescriptionDivChange = (value: string) => {
     setTask((prevTask) => ({ ...prevTask, description: value }));
-  }
+  };
 
   return (
     <>
@@ -55,7 +52,10 @@ export function Schedule({ setTask, task }: ScheduleProps) {
           className="bg-muted p-3 placeholder:text-muted-foreground/40 rounded-lg"
           placeholder="Name"
         />
-        <EditableArea value={task.description} onChange={handleDescriptionDivChange}/>
+        <EditableArea
+          value={task.description}
+          onChange={handleDescriptionDivChange}
+        />
       </section>
 
       <div className="flex gap-4">

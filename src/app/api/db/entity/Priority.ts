@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, OneToMany } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, OneToMany, DeleteDateColumn } from "typeorm"
 import { Task } from "./Task"
 
 @Entity()
@@ -17,4 +17,18 @@ export class Priority extends BaseEntity {
 
     @OneToMany(() => Task, (task) => task.priority)
     tasks!: Task[]
+
+    @DeleteDateColumn()
+    deletedAt: Date | null = null;
+
+    constructor(
+        name?: string,
+        order?: number,
+        color?: string,
+    ) {
+        super();
+        this.name = name ?? '';
+        this.order = order ?? 0;
+        this.color = color ?? '';
+    }
 }

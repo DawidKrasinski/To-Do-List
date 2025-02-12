@@ -1,14 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { Task } from "@/app/taskType.js";
+import { Task } from "@/app/types/taskType.js";
 import { useToDoList } from "@/app/toDoListProvider";
 import { Calendar } from "@/app/components/calendar/calendar-component";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Schedule } from "@/app/components/schedule/schedule-component";
-import { PrioritySection } from "@/app/components/priority/priority-component";
+import { Priorities } from "@/app/components/priority/priority-component";
 import { Header } from "@/app/components/header/header-component";
-
 
 export default function EditTask() {
   const params = useParams<{ id: string }>();
@@ -17,15 +16,15 @@ export default function EditTask() {
   const [task, setTask] = useState<Task>({
     name: "",
     description: "",
-    priority: {id: 0},
+    priority: { id: 0, color: "#ffffff", name: "", order: 0 },
     startTime: "",
     endTime: "",
-    date: simpleDate(new Date),
+    date: simpleDate(new Date()),
   });
-  const [orginalTaskName, setOrginalTaskName] = useState("")
+  const [orginalTaskName, setOrginalTaskName] = useState("");
 
-  function simpleDate (date: Date) {
-    return date.toISOString().split("T")[0]
+  function simpleDate(date: Date) {
+    return date.toISOString().split("T")[0];
   }
 
   const handleDateChange = (date: string) => {
@@ -33,7 +32,10 @@ export default function EditTask() {
   };
 
   const handlePriorityChange = (priority: number) => {
-    const updatedTask = { ...task, priority: { ...task.priority, id: priority } }; 
+    const updatedTask = {
+      ...task,
+      priority: { ...task.priority, id: priority },
+    };
     setTask(updatedTask);
   };
 
@@ -53,7 +55,7 @@ export default function EditTask() {
       task.id
     ) {
       console.log(task);
-      editTask(task.id, task);
+      editTask(task);
       router.push("/");
     } else {
       console.log("task request is invalid");
@@ -73,10 +75,10 @@ export default function EditTask() {
     async function loadTask() {
       const fetchedTask = await fetchTaskById(params.id);
       setTask(fetchedTask);
-      setOrginalTaskName(fetchedTask.name)
-      console.log("priority", fetchedTask.priority)
+      setOrginalTaskName(fetchedTask.name);
+      console.log("priority", fetchedTask.priority);
     }
-  loadTask();
+    loadTask();
   }, [params.id]);
 
   return (
@@ -85,7 +87,7 @@ export default function EditTask() {
         <Header header={orginalTaskName} />
         <Calendar onChange={handleDateChange} date={task.date} />
         <Schedule setTask={setTask} task={task} />
-        <PrioritySection onChange={handlePriorityChange} priority={task.priority}/>
+        <Priorities onChange={handlePriorityChange} priority={task.priority} />
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background pt-1">
@@ -98,7 +100,7 @@ export default function EditTask() {
           </button>
           <button
             onClick={() => handleDeleteTaskButtonClicked(task)}
-            className="bg-deleteTaskButton rounded-lg p-3 w-full"
+            className="bg-deleteButton rounded-lg p-3 w-full"
           >
             Delete Task
           </button>

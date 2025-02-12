@@ -41,13 +41,13 @@ export async function POST(req: NextRequest) {
       priority,
       body.description,
     )
-
+    console.log(task)
     await task.save()
     return NextResponse.json({}, { status: 201 });
   } catch (error) {
-    console.log("cant use post method", error);
+    console.log("cant use POST method", error);
     return NextResponse.json(
-      { error: "cant use post method" },
+      { error: "cant use POST method" },
       { status: 500 }
     );
   }

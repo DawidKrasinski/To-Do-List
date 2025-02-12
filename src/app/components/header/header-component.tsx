@@ -9,7 +9,7 @@ export function Header({ header }: HeaderProps) {
     <div className="flex pr-8">
       <Link
         href="/"
-        className="w-8 h-8 border-2 text-muted-foreground rounded-full flex justify-center items-center"
+        className="w-8 h-8 border-2 border-muted-foreground text-muted-foreground rounded-full flex justify-center items-center"
       >
         <i className="fa-solid fa-arrow-left"></i>
       </Link>

@@ -2,17 +2,17 @@
 import { Header } from "../components/header/header-component";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Task } from "../taskType.js";
+import { Task } from "../types/taskType.js";
 import { useToDoList } from "../toDoListProvider";
 import { Calendar } from "../components/calendar/calendar-component";
 import { Schedule } from "@/app/components/schedule/schedule-component";
-import { PrioritySection } from "@/app/components/priority/priority-component";
+import { Priorities } from "@/app/components/priority/priority-component";
 
 export default function AddTask() {
   const [task, setTask] = useState<Task>({
     name: "",
     description: "",
-    priority: {id: 0},
+    priority: { id: 0, color: "#ffffff", name: "", order: 0 },
     startTime: "",
     endTime: "",
     date: simpleDate(new Date()),
@@ -20,8 +20,8 @@ export default function AddTask() {
   const { addTask } = useToDoList();
   const router = useRouter();
 
-  function simpleDate (date: Date) {
-    return date.toISOString().split("T")[0]
+  function simpleDate(date: Date) {
+    return date.toISOString().split("T")[0];
   }
 
   const handleDateChange = (date: string) => {
@@ -29,14 +29,17 @@ export default function AddTask() {
   };
 
   const handlePriorityChange = (priority: number) => {
-    const updatedTask = { ...task, priority: { ...task.priority, id: priority } }; 
+    const updatedTask = {
+      ...task,
+      priority: { ...task.priority, id: priority },
+    };
     setTask(updatedTask);
   };
 
   function handleAddTaskButtonClicked(task: Task) {
     if (
       task.name.trim() &&
-      task.priority &&
+      task.priority.id &&
       task.startTime &&
       task.endTime &&
       task.date.trim() &&
@@ -54,9 +57,9 @@ export default function AddTask() {
     <>
       <div className="px-4 pt-12 pb-20 flex flex-col gap-8">
         <Header header="Create new task" />
-        <Calendar onChange={handleDateChange} date={task.date}/>
+        <Calendar onChange={handleDateChange} date={task.date} />
         <Schedule setTask={setTask} task={task} />
-        <PrioritySection onChange={handlePriorityChange} priority={task.priority}/>
+        <Priorities onChange={handlePriorityChange} priority={task.priority} />
 
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background pt-1">
           <button
